@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff5f6">
+<title>Seoul Glow Studio 2.0</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+:root{--pink:#e77f9c;--dark:#35242d;--muted:#987f8a;--cream:#fffaf7;--line:#f0dce3;--gold:#c69b5e}
+*{box-sizing:border-box}
+body{margin:0;background:#fff7f7;color:var(--dark);font-family:'DM Sans',sans-serif}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+header{background:#fffdfc;border-bottom:1px solid var(--line);padding:13px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font:600 25px 'Playfair Display',serif;color:#c65e7d}
+.brand span{font-style:italic;color:#765765}
+.small{font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:4px}
+.wallet{background:#fff0d8;padding:9px 12px;border-radius:25px;font-size:12px;font-weight:700}
+main{max-width:1080px;margin:auto;padding:18px 12px 40px}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+h1{font:600 clamp(25px,4vw,36px) 'Playfair Display',serif;margin:0}
+.sub{font-size:12px;color:var(--muted);margin-top:5px}
+.levels{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:15px}
+.level{background:white;border:1px solid var(--line);border-radius:11px;padding:10px 3px;color:var(--dark);font-size:10px}
+.level strong{display:block;font:600 18px 'Playfair Display',serif;margin-bottom:4px}
+.level.active{background:var(--dark);color:white;border-color:var(--dark)}
+.level:disabled{opacity:.45;cursor:not-allowed}
+.layout{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);gap:14px;align-items:start}
+.card{background:#fffdfc;border:1px solid var(--line);border-radius:17px;overflow:hidden;min-width:0}
+.head{padding:15px;border-bottom:1px solid #f5e8ec}
+.head h2{font:600 20px 'Playfair Display',serif;margin:0}
+.head p{font-size:11px;color:var(--muted);margin:5px 0 0;line-height:1.5}
+.client{display:flex;gap:12px;align-items:center;padding:12px 15px;background:#fff1f4}
+.avatar{width:44px;height:44px;border-radius:50%;background:#f7d5df;display:grid;place-items:center;font-size:25px;flex-shrink:0}
+.client b{font-size:12px}
+.client p{font-size:11px;color:#806674;margin:4px 0 0;line-height:1.5}
+.stage{position:relative;display:flex;justify-content:center;align-items:center;min-height:335px;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#fffdf8,#f7dfe7 70%,#eed0db);padding:8px}
+.stage:before,.stage:after{content:"";position:absolute;top:14px;bottom:14px;width:6px;border-radius:8px;background:linear-gradient(#e3b9c7,#fff,#e3b9c7)}
+.stage:before{left:10px}.stage:after{right:10px}
+#girl{width:min(100%,330px);height:auto;position:relative;z-index:1}
+.tag{position:absolute;z-index:2;bottom:10px;left:50%;transform:translateX(-50%);white-space:nowrap;background:#fffdf0e8;padding:7px 12px;border-radius:20px;font-size:9px;letter-spacing:1.5px}
+.actions{display:flex;gap:7px;padding:10px}
+.btn{border:1px solid #ead5dd;background:white;color:var(--dark);border-radius:9px;padding:11px 9px;font-size:11px}
+.btn.primary{background:var(--pink);border-color:var(--pink);color:white;font-weight:700}
+.btn.dark{background:var(--dark);border-color:var(--dark);color:white}
+.btn.gold{background:#f5e4c5;border-color:#ead2a5}
+.actions .btn{flex:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 12px 13px}
+.stat{background:#fff4f5;border-radius:10px;text-align:center;padding:10px 3px}
+.stat strong{display:block;font-size:16px}
+.stat span{display:block;font-size:9px;color:var(--muted);margin-top:3px}
+.tools{padding:13px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.tab{border:1px solid transparent;background:#fff2f5;border-radius:10px;padding:10px 3px;font-size:10px;color:var(--dark)}
+.tab span{display:block;font-size:19px;margin-bottom:4px}
+.tab.active{border-color:var(--pink);background:#f8dfe7}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin:20px 0 11px}
+.swatches{display:flex;flex-wrap:wrap;gap:12px}
+.swatch{width:35px;height:35px;border:2px solid white;outline:1px solid #e7d5dc;border-radius:50%;position:relative}
+.swatch.active{outline:2px solid var(--gold);outline-offset:2px}
+.swatch.active:after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:white;text-shadow:0 1px 3px #333;font-size:13px}
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.option{border:1px solid var(--line);background:#fff8fa;border-radius:10px;padding:11px 3px;font-size:10px;color:var(--dark)}
+.option span{display:block;font-size:22px;margin-bottom:6px}
+.option.active{background:#f8dfe7;border-color:var(--pink)}
+.help{font-size:11px;line-height:1.6;color:var(--muted);margin:12px 0}
+.progress{height:5px;border-radius:10px;background:#f4e5ea;overflow:hidden;margin-top:10px}
+#bar{height:100%;width:0;background:var(--pink);transition:width .3s}
+.message{display:none;margin:12px 0 0;padding:12px;background:#fff1f4;border-radius:10px;font-size:12px;line-height:1.7}
+.target{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.badge{font-size:10px;background:#fff;border:1px solid #eddae1;border-radius:20px;padding:6px 8px}
+footer{text-align:center;font:italic 16px 'Playfair Display',serif;color:#b0788d;padding:25px 10px}
+[hidden]{display:none!important}
+@media(max-width:650px){
+ header{padding:13px}.brand{font-size:22px}
+ main{padding:14px 9px 30px}
+ .layout{grid-template-columns:1fr}
+ .stage{min-height:320px}#girl{width:min(100%,300px)}
+ .level{font-size:9px;padding:9px 1px}.level strong{font-size:15px}
+ .head{padding:13px}
+}
+</style>
+</head>
+<body>
+<header>
+ <div><div class="brand">Seoul <span>Glow Studio</span> ♡</div><div class="small">K-BEAUTY MAKEOVER GAME</div></div>
+ <div class="wallet">🪙 <span id="coins">0</span></div>
+</header>
+<main>
+ <div class="topline"><div><h1>Beauty Boutique</h1><div class="sub">Every client has a story. Create their perfect look.</div></div><div class="wallet">✦ <span id="stars">0</span> stars</div></div>
+ <div class="levels" id="levels"></div>
+ <div class="layout">
+  <section class="card">
+   <div class="head"><h2 id="missionTitle">Client 01 · Daily Dew</h2><p id="missionDesc">A fresh, dewy everyday look.</p></div>
+   <div class="client"><div class="avatar" id="avatar">🌸</div><div><b id="clientName">Meet Yuna</b><p id="request">“I'd love a soft pink makeup look!”</p><div class="target" id="targets"></div></div></div>
+   <div class="stage">
+    <svg id="girl" viewBox="0 0 320 390" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustrated makeover character">
+     <defs>
+      <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe5d0"/><stop offset=".55" stop-color="#edba9d"/><stop offset="1" stop-color="#cb8b78"/></linearGradient>
+      <linearGradient id="hair"><stop stop-color="#754d40"/><stop offset=".5" stop-color="#302126"/><stop offset="1" stop-color="#875748"/></linearGradient>
+      <linearGradient id="dress"><stop stop-color="#f7c8d6"/><stop offset="1" stop-color="#c97596"/></linearGradient>
+     </defs>
+     <path d="M121 235L118 287Q160 309 202 287L199 235" fill="url(#skin)"/>
+     <path id="outfit" d="M40 390Q47 315 111 288L160 319L209 288Q276 315 280 390Z" fill="url(#dress)"/>
+     <path d="M112 289L160 329L208 289L190 280L160 304L130 280Z" fill="#fff5f4"/>
+     <path d="M48 390L98 313L112 390M272 390L222 313L208 390" fill="#fff" opacity=".2"/>
+     <path d="M92 175Q66 74 120 43Q202 9 245 82Q269 135 247 255L223 290L86 285L66 220Z" fill="url(#hair)" id="hairBack"/>
+     <ellipse cx="88" cy="171" rx="14" ry="22" fill="url(#skin)"/><ellipse cx="232" cy="171" rx="14" ry="22" fill="url(#skin)"/>
+     <path d="M94 109Q101 66 160 66Q219 66 226 109L217 198Q207 245 160 264Q113 245 103 198Z" fill="url(#skin)"/>
+     <path d="M108 168Q105 182 114 190M212 168Q215 182 206 190" fill="none" stroke="#fff0de" stroke-width="4" opacity=".7"/>
+     <g id="blush" opacity=".55"><ellipse cx="119" cy="186" rx="25" ry="13" fill="#ee9bad"/><ellipse cx="201" cy="186" rx="25" ry="13" fill="#ee9bad"/></g>
+     <g id="shadow" opacity=".7"><path d="M103 146Q126 124 151 148Q129 162 103 146Z" fill="#d8a0b9"/><path d="M169 148Q194 124 217 146Q191 162 169 148Z" fill="#d8a0b9"/></g>
+     <path d="M103 150Q126 128 151 150Q128 171 103 150Z M169 150Q194 128 217 150Q192 171 169 150Z" fill="#fffaf5"/>
+     <ellipse cx="128" cy="151" rx="9" ry="11" fill="#76503b"/><ellipse cx="192" cy="151" rx="9" ry="11" fill="#76503b"/>
+     <ellipse cx="128" cy="152" rx="5" ry="8" fill="#21191c"/><ellipse cx="192" cy="152" rx="5" ry="8" fill="#21191c"/>
+     <circle cx="131" cy="147" r="3" fill="white"/><circle cx="195" cy="147" r="3" fill="white"/>
+     <g id="liner" fill="none" stroke="#35242d" stroke-width="2.7" stroke-linecap="round"><path d="M102 149Q126 126 152 149"/><path d="M168 149Q194 126 218 149"/></g>
+     <path d="M103 130Q126 116 149 131M171 131Q194 116 217 130" fill="none" stroke="#64433a" stroke-width="4.5" stroke-linecap="round"/>
+     <path d="M160 151Q155 177 149 187Q160 193 171 187" fill="none" stroke="#c98e77" stroke-width="2.3"/>
+     <path d="M136 213Q148 202 160 210Q172 202 184 213Q174 234 160 231Q145 234 136 213Z" fill="#d96d8c" id="lips"/>
+     <path d="M141 214Q160 219 179 214Q160 226 141 214Z" fill="#f5b1bf"/>
+     <path id="hairFront" d="M78 145Q60 79 111 48Q145 25 179 44Q145 45 125 79Q109 105 111 143L98 171L88 149Z" fill="url(#hair)"/>
+     <path d="M212 77Q240 95 235 152L224 184L215 141Q218 102 192 76Z" fill="url(#hair)" id="sideHair"/>
+     <path d="M94 92Q112 52 145 46M225 111Q237 147 224 165" fill="none" stroke="#d7a28f" stroke-width="2" opacity=".45"/>
+     <path d="M114 296Q160 340 206 296" fill="none" stroke="#d4ac75" stroke-width="2"/><path d="M157 321L163 321L160 331Z" fill="#edcf91"/>
+    </svg>
+    <div class="tag" id="stageLabel">DAILY DEW</div>
+   </div>
+   <div class="actions"><button class="btn" id="before">◉ Before</button><button class="btn" id="after">✧ After</button><button class="btn" id="reset">↺ Reset</button></div>
+   <div class="stats"><div class="stat"><strong id="liveScore">0%</strong><span>Client Match</span></div><div class="stat"><strong id="liveCoins">0</strong><span>Coins Earned</span></div><div class="stat"><strong id="doneCount">0/5</strong><span>Clients Served</span></div></div>
+  </section>
+  <section class="card">
+   <div class="head"><h2>Makeover Station ✿</h2><p>Use your tools, match the brief and impress your client.</p></div>
+   <div class="tools">
+    <div class="tabs">
+     <button class="tab active" data-tool="lip"><span>💄</span>Lip Tint</button>
+     <button class="tab" data-tool="eyes"><span>🎨</span>Eyeshadow</button>
+     <button class="tab" data-tool="blush"><span>🌸</span>Blush</button>
+     <button class="tab" data-tool="liner"><span>✒️</span>Eyeliner</button>
+     <button class="tab" data-tool="hair"><span>💇🏻‍♀️</span>Hair</button>
+     <button class="tab" data-tool="outfit"><span>👗</span>Outfit</button>
+    </div>
+    <div class="label" id="choiceTitle">Choose a lip tint</div>
+    <div class="swatches" id="swatches"></div><div class="options" id="options" hidden></div>
+    <p class="help" id="help">Tap a shade to apply it. Try to match your client's request!</p>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="actions"><button class="btn dark" id="finish">Finish & Score ✦</button><button class="btn gold" id="save">↓ Save Look</button></div>
+    <div class="message" id="message" aria-live="polite"></div>
+    <div class="actions"><button class="btn primary" id="next" hidden>Next Client →</button></div>
+   </div>
+  </section>
+ </div>
+ <footer>Your salon, your art, your glow. ♡</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const missions=[
+ {name:"Daily Dew",client:"Yuna",emoji:"🌸",request:"“I want a fresh, soft pink everyday look!”",lip:1,eyes:0,blush:0,liner:0,hair:0,outfit:0},
+ {name:"Strawberry Milk",client:"Mina",emoji:"🍓",request:"“Give me rosy cheeks and a sweet pastel style!”",lip:2,eyes:1,blush:0,liner:0,hair:1,outfit:0},
+ {name:"Seoul Date",client:"Jisoo",emoji:"🌷",request:"“I need a romantic look for my evening date!”",lip:4,eyes:4,blush:2,liner:2,hair:2,outfit:4},
+ {name:"Idol Glow",client:"Sora",emoji:"✨",request:"“I want a bold, stage-ready idol look!”",lip:3,eyes:3,blush:3,liner:1,hair:3,outfit:2},
+ {name:"Beauty Muse",client:"Hana",emoji:"👑",request:"“Create an elegant, unforgettable editorial look!”",lip:5,eyes:5,blush:4,liner:3,hair:2,outfit:5}
+];
+const pal={lip:["#bd536d","#e57991","#f2a5b3","#a82f52","#d56e7b","#9d425d"],eyes:["#d8a2b7","#b97991","#c5a1d4","#b18b55","#dcae98","#987eaa"],blush:["#ed9aaa","#d96d8c","#f3b6a9","#d785a0","#e7a8bd","#c97976"],liner:["#402932","#20191f","#68463d","#735d75"]};
+const hairStyles=[
+ ["M92 175Q66 74 120 43Q202 9 245 82Q269 135 247 255L223 290L86 285L66 220Z","M78 145Q60 79 111 48Q145 25 179 44Q145 45 125 79Q109 105 111 143L98 171L88 149Z"],
+ ["M67 180Q43 76 113 40Q205 9 250 86Q278 151 253 286L225 294L240 165Q245 74 181 49Q111 35 91 111Z","M75 132Q57 49 132 33Q206 18 244 81Q208 47 177 54Q128 45 105 106L98 165Z"],
+ ["M77 155Q52 76 114 44Q198 15 242 82L238 259L214 280L220 147Q215 75 166 57Q109 53 96 126Z","M78 135Q60 63 128 37Q200 20 240 81Q206 53 173 55Q129 46 108 107Z"],
+ ["M72 173Q46 75 118 40Q205 10 247 87Q268 145 250 262L230 292L88 284Z","M76 126Q57 48 130 32Q205 17 242 81Q210 47 176 55Q126 44 104 104Z"]
+];
+const clothes=[["#f7c8d6","#c97596"],["#d8b8e8","#9878b3"],["#edc98b","#b68b52"],["#b5c7dd","#718baa"],["#e5a4b7","#b74f77"],["#f0d9c9","#b99a84"]];
+const defaults=()=>({lip:0,eyes:0,blush:0,liner:0,hair:0,outfit:0});
+let s={level:0,unlocked:0,score:0,coins:0,done:[],tool:"lip",before:false,look:defaults(),claimed:[]};
+
+function drawLevels(){
+ $("levels").innerHTML="";
+ missions.forEach((m,i)=>{
+  const b=document.createElement("button");b.className="level"+(s.level===i?" active":"");b.disabled=i>s.unlocked;
+  b.innerHTML="<strong>"+(i<s.unlocked?"✓":String(i+1).padStart(2,"0"))+"</strong>"+m.name;
+  b.onclick=()=>selectLevel(i);$("levels").appendChild(b);
+ });
+}
+function selectLevel(i){
+ if(i>s.unlocked)return;s.level=i;s.before=false;
+ $("message").style.display="none";$("next").hidden=true;$("finish").hidden=false;
+ drawLevels();render();
+}
+function render(){
+ const m=missions[s.level];
+ $("missionTitle").textContent="Client "+String(s.level+1).padStart(2,"0")+" · "+m.name;
+ $("missionDesc").textContent="Makeover challenge "+(s.level+1)+" of 5";
+ $("clientName").textContent="Meet "+m.client;
+ $("avatar").textContent=m.emoji;
+ $("request").textContent=m.request;
+ $("stageLabel").textContent=s.before?"BEFORE LOOK":m.name.toUpperCase();
+ $("coins").textContent=s.coins;$("stars").textContent=s.score;
+ $("doneCount").textContent=s.done.length+"/5";
+ $("liveCoins").textContent=s.coins;
+ $("lips").setAttribute("fill",s.before?"#d99a9b":pal.lip[s.look.lip]);
+ $("shadow").querySelectorAll("path").forEach(p=>p.setAttribute("fill",s.before?"#cdb6b4":pal.eyes[s.look.eyes]));
+ $("blush").querySelectorAll("ellipse").forEach(e=>e.setAttribute("fill",s.before?"#dfb9ae":pal.blush[s.look.blush]));
+ $("liner").setAttribute("stroke",s.before?"#765e57":pal.liner[s.look.liner]);
+ $("hairBack").setAttribute("d",hairStyles[s.look.hair][0]);
+ $("hairFront").setAttribute("d",hairStyles[s.look.hair][1]);
+ $("outfit").setAttribute("fill",s.before?"#e6c6c7":clothes[s.look.outfit][0]);
+ $("hairBack").style.opacity=s.before?".8":"1";$("hairFront").style.opacity=s.before?".8":"1";
+ $("liveScore").textContent=matchScore()+"%";
+ $("bar").style.width=matchScore()+"%";
+ document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tool===s.tool));
+ const styled=s.tool==="hair"||s.tool==="outfit";
+ $("swatches").hidden=styled;$("options").hidden=!styled;
+ const names={lip:"Lip Tint",eyes:"Eyeshadow",blush:"Blush",liner:"Eyeliner",hair:"Hairstyles",outfit:"Outfits"};
+ $("choiceTitle").textContent="Choose "+names[s.tool];
+ $("targets").innerHTML="";
+ ["lip","eyes","blush","hair","outfit"].forEach(k=>{
+  const names2={lip:"Lip",eyes:"Eyes",blush:"Blush",hair:"Hair",outfit:"Outfit"};
+  const tag=document.createElement("span");tag.className="badge";
+  tag.textContent=(s.look[k]===m[k]?"✓ ":"○ ")+names2[k];
+  $("targets").appendChild(tag);
+ });
+ if(!styled){
+  $("swatches").innerHTML="";
+  pal[s.tool].forEach((col,i)=>{
+   const b=document.createElement("button");b.className="swatch";
+   b.style.background=col;b.title="Shade "+(i+1);b.setAttribute("aria-label","Choose shade "+(i+1));
+   b.classList.toggle("active",s.look[s.tool]===i);
+   b.onclick=()=>{s.look[s.tool]=i;s.before=false;render();};
+   $("swatches").appendChild(b);
+  });
+  $("help").textContent="Tap a shade to apply it. Your client has a preferred style, so choose carefully for bonus points.";
+ }else{
+  const arr=s.tool==="hair"?[["🎀","Soft waves"],["💁🏻‍♀️","Long layers"],["👩🏻","Chic bob"],["👸🏻","Elegant"]]:[["🌸","Rose"],["💜","Lavender"],["✨","Champagne"],["🩵","Baby blue"],["💗","Rose satin"],["🤍","Cream"]];
+  $("options").innerHTML="";
+  arr.forEach((it,i)=>{
+   const b=document.createElement("button");b.className="option";
+   b.classList.toggle("active",s.look[s.tool]===i);b.innerHTML="<span>"+it[0]+"</span>"+it[1];
+   b.onclick=()=>{s.look[s.tool]=i;s.before=false;render();};$("options").appendChild(b);
+  });
+  $("help").textContent="Choose the style that best matches your client's request.";
+ }
+}
+function matchScore(){
+ const m=missions[s.level];let hit=0;
+ ["lip","eyes","blush","liner","hair","outfit"].forEach(k=>{if(s.look[k]===m[k])hit++;});
+ return Math.round(hit/6*100);
+}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{s.tool=b.dataset.tool;s.before=false;render();});
+$("before").onclick=()=>{s.before=true;render();};
+$("after").onclick=()=>{s.before=false;render();};
+$("reset").onclick=()=>{s.look=defaults();s.before=false;$("message").style.display="none";render();};
+$("finish").onclick=()=>{
+ const i=s.level,score=matchScore(),stars=score>=85?3:score>=60?2:1;
+ if(!s.claimed.includes(i)){
+  s.claimed.push(i);s.done.push(i);s.coins+=stars*25;s.score+=stars;
+  s.unlocked=Math.max(s.unlocked,Math.min(i+1,4));
+ }
+ $("message").style.display="block";
+ $("message").innerHTML="<b>✦ Client review: "+stars+"/3 stars!</b><br>Style match: "+score+"%.<br>"+(score>=85?"Perfect match! Your client loves the look.":score>=60?"Lovely makeover! Try matching more of the requested styles.":"Good start! Check the client request and match more features.")+"<br>Reward: "+(stars*25)+" coins.";
+ $("finish").hidden=true;$("next").hidden=i===4;drawLevels();render();
+};
+$("next").onclick=()=>selectLevel(Math.min(s.level+1,4));
+$("save").onclick=()=>{
+ const svg=$("girl").cloneNode(true);
+ svg.setAttribute("xmlns","http://www.w3.org/2000/svg");
+ svg.setAttribute("width","640");svg.setAttribute("height","780");
+ const bg=document.createElementNS("http://www.w3.org/2000/svg","rect");
+ bg.setAttribute("width","320");bg.setAttribute("height","390");bg.setAttribute("fill","#fff0f4");svg.insertBefore(bg,svg.firstChild);
+ const blob=new Blob([new XMLSerializer().serializeToString(svg)],{type:"image/svg+xml;charset=utf-8"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="seoul-glow-client-"+(s.level+1)+".svg";document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1500);
+ $("message").style.display="block";$("message").textContent="♡ Your illustrated look has been downloaded as an SVG image.";
+};
+drawLevels();render();
+</script>
+</body>
+</html>
